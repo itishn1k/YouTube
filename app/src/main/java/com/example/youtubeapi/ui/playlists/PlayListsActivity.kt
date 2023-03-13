@@ -7,12 +7,12 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.example.youtubeapi.App.Companion.KEY
 import com.example.youtubeapi.R
-import com.example.youtubeapi.base.BaseActivity
+import com.example.youtubeapi.core.ui.BaseActivity
 import com.example.youtubeapi.databinding.PlaylistsMainBinding
 import com.example.youtubeapi.ui.detail.DetailActivity
-import com.example.youtubeapi.utils.ConnectionLiveData
-import com.example.youtubeapi.utils.isNetworkConnected
-import com.example.youtubeapi.utils.showToast
+import com.example.youtubeapi.core.utils.ConnectionLiveData
+import com.example.youtubeapi.core.ext.isNetworkConnected
+import com.example.youtubeapi.core.ext.showToast
 
 class PlayListsActivity : BaseActivity<PlayListsViewModel, PlaylistsMainBinding>() {
     private lateinit var adapter: PlaylistsAdapter
@@ -55,7 +55,6 @@ class PlayListsActivity : BaseActivity<PlayListsViewModel, PlaylistsMainBinding>
             } else {
                 setPlaylists()
             }
-
         }
     }
 

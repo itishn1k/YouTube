@@ -1,12 +1,14 @@
-package com.example.youtubeapi.remote
+package com.example.youtubeapi.repository
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.youtubeapi.App
 import com.example.youtubeapi.BuildConfig
+import com.example.youtubeapi.core.network.RetrofitClient
 import com.example.youtubeapi.model.PlaylistItem
 import com.example.youtubeapi.model.Playlists
+import com.example.youtubeapi.remote.ApiService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
