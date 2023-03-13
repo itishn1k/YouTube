@@ -1,15 +1,17 @@
 package com.example.youtubeapi.ui.playlists
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.youtubeapi.databinding.ItemPlaylistBinding
-import com.example.youtubeapi.model.playlist.Item
+import com.example.youtubeapi.model.Item
 
-class PlaylistsAdapter : RecyclerView.Adapter<PlaylistsAdapter.PlaylistsViewHolder>() {
+class PlaylistsAdapter(val onClick: (Item) -> Unit) :
+    RecyclerView.Adapter<PlaylistsAdapter.PlaylistsViewHolder>() {
+
     private var playlists = arrayListOf<Item>()
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaylistsViewHolder {
         return PlaylistsViewHolder(
@@ -18,6 +20,10 @@ class PlaylistsAdapter : RecyclerView.Adapter<PlaylistsAdapter.PlaylistsViewHold
                 parent, false
             )
         )
+    }
+
+    fun setData(list: List<Item>) {
+        playlists.addAll(list)
     }
 
     override fun getItemCount(): Int {
@@ -30,10 +36,14 @@ class PlaylistsAdapter : RecyclerView.Adapter<PlaylistsAdapter.PlaylistsViewHold
 
     inner class PlaylistsViewHolder(private val binding: ItemPlaylistBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
         fun bind(playlists: Item) {
             binding.ivItem.load(playlists.snippet.thumbnails.medium.url)
             binding.tvTitle.text = playlists.snippet.title
-            binding.tvTimeOrVideos.text = playlists.contentDetails.itemCount.toString()
+            binding.tvTimeOrVideos.text = "${playlists.contentDetails.itemCount} video series"
+            itemView.setOnClickListener {
+                onClick(playlists)
+            }
         }
     }
 }

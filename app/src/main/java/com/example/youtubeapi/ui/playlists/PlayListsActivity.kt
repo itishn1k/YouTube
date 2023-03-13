@@ -1,11 +1,18 @@
 package com.example.youtubeapi.ui.playlists
 
+import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import com.example.youtubeapi.App.Companion.KEY
 import com.example.youtubeapi.R
 import com.example.youtubeapi.base.BaseActivity
 import com.example.youtubeapi.databinding.PlaylistsMainBinding
+import com.example.youtubeapi.ui.detail.DetailActivity
+import com.example.youtubeapi.utils.ConnectionLiveData
 import com.example.youtubeapi.utils.isNetworkConnected
+import com.example.youtubeapi.utils.showToast
 
 class PlayListsActivity : BaseActivity<PlayListsViewModel, PlaylistsMainBinding>() {
     private lateinit var adapter: PlaylistsAdapter
@@ -14,12 +21,17 @@ class PlayListsActivity : BaseActivity<PlayListsViewModel, PlaylistsMainBinding>
         ViewModelProvider(this)[PlayListsViewModel::class.java]
     }
 
-    override fun checkInternet() {
-        if (!isNetworkConnected()) {
-            setContentView(R.layout.no_internet)
-        }
-        else{
-            initView()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding.toolbar.tvBack.isVisible = false
+        checkInternet()
+    }
+
+    override fun initListener() {
+        adapter = PlaylistsAdapter {
+            val intent = Intent(this@PlayListsActivity, DetailActivity::class.java)
+            intent.putExtra(KEY, it.id)
+            startActivity(intent)
         }
     }
 
@@ -27,6 +39,30 @@ class PlayListsActivity : BaseActivity<PlayListsViewModel, PlaylistsMainBinding>
         return PlaylistsMainBinding.inflate(layoutInflater)
     }
 
-    override fun initView() {
+    override fun checkInternet() {
+        super.checkInternet()
+        val cld = ConnectionLiveData(application)
+        cld.observe(this) {
+            if (!it) {
+                binding.noInternet.isVisible = true
+                binding.include.btnTryAgain.setOnClickListener {
+                    if (!isNetworkConnected()) {
+                        showToast(getString(R.string.no_internet))
+                    } else {
+                        binding.noInternet.isVisible = false
+                    }
+                }
+            } else {
+                setPlaylists()
+            }
+
         }
     }
+
+    private fun setPlaylists() {
+        viewModel.getPlaylists().observe(this) {
+            binding.rvPlaylists.adapter = adapter
+            adapter.setData(it.items)
+        }
+    }
+}

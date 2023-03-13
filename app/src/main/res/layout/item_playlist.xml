@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="@dimen/item_layout"
-    android:paddingTop="@dimen/item_layout">
+    android:layout_marginTop="@dimen/item_top_margin">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/image_container"
@@ -26,16 +25,17 @@
         <FrameLayout
             android:id="@+id/black_bar"
             android:layout_width="match_parent"
-            android:layout_height="24dp"
+            android:layout_height="@dimen/black_bar_height"
             android:layout_gravity="bottom"
             android:background="@color/black_transparent"
+            android:visibility="visible"
             tools:ignore="TextSizeCheck">
 
             <TextView
                 android:id="@+id/tv_playlist"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="54dp"
+                android:layout_marginStart="@dimen/margin_54_dp"
                 android:fontFamily="@font/notosans_regular"
                 android:text="@string/playlist"
                 android:textColor="@color/white"
@@ -49,12 +49,13 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="@dimen/text_title_margin"
+        android:layout_marginTop="@dimen/text_title_margin"
         android:fontFamily="@font/fjallaone_regular"
+        android:maxLines="2"
         android:text="@string/emotional"
         android:textColor="@color/text_black"
-        android:textSize="16sp"
+        android:textSize="@dimen/text_size_title"
         android:textStyle="bold"
         app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,11 +67,11 @@
         android:id="@+id/tv_time_or_videos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="@dimen/text_margin_top"
         android:fontFamily="@font/notosans_regular"
         android:text="@string/_32_video_series"
         android:textColor="@color/almost_black"
-        android:textSize="12sp"
+        android:textSize="@dimen/text_size_desc"
         app:layout_constraintStart_toStartOf="@id/tv_title"
         app:layout_constraintTop_toBottomOf="@id/tv_title" />
 

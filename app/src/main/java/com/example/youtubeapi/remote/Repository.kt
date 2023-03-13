@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.youtubeapi.App
 import com.example.youtubeapi.BuildConfig
-import com.example.youtubeapi.model.playlist.Item
-import com.example.youtubeapi.model.playlist.Playlists
+import com.example.youtubeapi.model.PlaylistItem
+import com.example.youtubeapi.model.Playlists
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,12 +19,11 @@ open class Repository {
     fun getPlaylists(): LiveData<Playlists> {
         val data = MutableLiveData<Playlists>()
         apiService.getPlaylists(
-            BuildConfig.API_KEY, App.PART, App.CHANNEL_ID
+            BuildConfig.API_KEY, App.PART_PLAYLISTS, App.CHANNEL_ID
         ).enqueue(object : Callback<Playlists> {
             override fun onResponse(call: Call<Playlists>, response: Response<Playlists>) {
                 data.value = response.body()
             }
-
             override fun onFailure(call: Call<Playlists>, t: Throwable) {
                 Log.e("ololo", "${t.message}")
             }
@@ -32,22 +31,41 @@ open class Repository {
         return data
     }
 
-    fun getItemList(id: String): LiveData<Item> {
-        val data = MutableLiveData<Item>()
-        apiService.getItemLists(BuildConfig.API_KEY, App.PART, "id")
-            .enqueue(object : Callback<Item> {
+    fun getItemList(id: String): LiveData<PlaylistItem> {
+        val data = MutableLiveData<PlaylistItem>()
+        apiService.getItemLists(BuildConfig.API_KEY, App.PART_PLAYLISTS, id)
+            .enqueue(object : Callback<PlaylistItem> {
                 override fun onResponse(
-                    call: Call<Item>, response: Response<Item>
+                    call: Call<PlaylistItem>, response: Response<PlaylistItem>
                 ) {
                     if (response.isSuccessful) {
                         data.value = response.body()
                     }
                 }
-
-                override fun onFailure(call: Call<Item>, t: Throwable) {
+                override fun onFailure(call: Call<PlaylistItem>, t: Throwable) {
                     print(t.stackTrace)
                 }
             })
         return data
     }
+//    companion object{
+//        private val apiService: ApiService by lazy {
+//            RetrofitClient.create()
+//        }
+//        fun getPlaylistsStatic(): LiveData<Playlists> {
+//            val data = MutableLiveData<Playlists>()
+//            apiService.getPlaylists(
+//                BuildConfig.API_KEY, App.PART_PLAYLISTS, App.CHANNEL_ID
+//            ).enqueue(object : Callback<Playlists> {
+//                override fun onResponse(call: Call<Playlists>, response: Response<Playlists>) {
+//                    data.value = response.body()
+//                }
+//
+//                override fun onFailure(call: Call<Playlists>, t: Throwable) {
+//                    Log.e("ololo", "${t.message}")
+//                }
+//            })
+//            return data
+//        }
+//    }
 }
