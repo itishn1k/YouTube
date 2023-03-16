@@ -5,12 +5,14 @@ import android.view.LayoutInflater
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.example.youtubeapi.App.Companion.KEY
+import com.example.youtubeapi.App.Companion.KEY_DESC
+import com.example.youtubeapi.App.Companion.KEY_TITLE
 import com.example.youtubeapi.R
+import com.example.youtubeapi.core.extention.isNetworkConnected
+import com.example.youtubeapi.core.extention.showToast
 import com.example.youtubeapi.core.ui.BaseActivity
-import com.example.youtubeapi.databinding.ActivityDetailBinding
 import com.example.youtubeapi.core.utils.ConnectionLiveData
-import com.example.youtubeapi.core.ext.isNetworkConnected
-import com.example.youtubeapi.core.ext.showToast
+import com.example.youtubeapi.databinding.ActivityDetailBinding
 
 class DetailActivity : BaseActivity<DetailViewModel, ActivityDetailBinding>() {
     private lateinit var adapter: DetailAdapter
@@ -50,11 +52,15 @@ class DetailActivity : BaseActivity<DetailViewModel, ActivityDetailBinding>() {
     }
 
     private fun setItems() {
+        val title = intent.getStringExtra(KEY_TITLE)
+        val desc = intent.getStringExtra(KEY_DESC)
         val id = intent.getStringExtra(KEY)
         id?.let { _ ->
             viewModel.getItemLists(id).observe(this) {
                 binding.rvItems.adapter = adapter
                 adapter.setItems(it.items)
+                binding.tvTitleDetail.text = title
+                binding.tvPlaylistDescription.text = desc
             }
         }
     }

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.youtubeapi.databinding.ItemPlaylistBinding
-import com.example.youtubeapi.model.Item
+import com.example.youtubeapi.data.remote.model.Item
 
 class PlaylistsAdapter(val onClick: (Item) -> Unit) :
     RecyclerView.Adapter<PlaylistsAdapter.PlaylistsViewHolder>() {
@@ -25,6 +25,9 @@ class PlaylistsAdapter(val onClick: (Item) -> Unit) :
     fun setData(list: List<Item>) {
         playlists.addAll(list)
     }
+//    fun setData(list: List<Item>) {
+//        playlists.addAll(list)
+//    }
 
     override fun getItemCount(): Int {
         return playlists.size

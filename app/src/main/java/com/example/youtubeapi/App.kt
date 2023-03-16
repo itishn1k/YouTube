@@ -11,5 +11,7 @@ class App : Application() {
         const val CHANNEL_ID = "UCt7sv-NKh44rHAEb-qCCxvA"
         const val PART_PLAYLISTS = "snippet,contentDetails"
         const val KEY: String = "key"
+        const val KEY_TITLE: String = "title"
+        const val KEY_DESC: String = "desc"
     }
 }

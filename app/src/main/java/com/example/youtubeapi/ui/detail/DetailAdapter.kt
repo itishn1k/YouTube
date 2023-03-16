@@ -6,7 +6,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.youtubeapi.databinding.ItemPlaylistBinding
-import com.example.youtubeapi.model.Item
+import com.example.youtubeapi.data.remote.model.Item
 
 class DetailAdapter :
     RecyclerView.Adapter<DetailAdapter.DetailViewHolder>() {

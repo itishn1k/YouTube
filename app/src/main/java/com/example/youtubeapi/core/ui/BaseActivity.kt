@@ -15,7 +15,7 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
         super.onCreate(savedInstanceState)
         binding = inflateViewBinding(layoutInflater)
         setContentView(binding.root)
-
+//hello
         checkInternet()
         initViewModel()
         initView()

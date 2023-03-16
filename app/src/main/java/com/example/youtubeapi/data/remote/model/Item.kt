@@ -1,4 +1,4 @@
-package com.example.youtubeapi.model
+package com.example.youtubeapi.data.remote.model
 
 data class Item(
     val contentDetails: ContentDetails,
