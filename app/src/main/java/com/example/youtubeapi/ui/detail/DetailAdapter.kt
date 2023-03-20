@@ -8,7 +8,7 @@ import coil.load
 import com.example.youtubeapi.databinding.ItemPlaylistBinding
 import com.example.youtubeapi.data.remote.model.Item
 
-class DetailAdapter :
+class DetailAdapter(val onClick: (Item) -> Unit) :
     RecyclerView.Adapter<DetailAdapter.DetailViewHolder>() {
 
     private val items = arrayListOf<Item>()
@@ -21,12 +21,14 @@ class DetailAdapter :
             binding.tvTitle.text = item.snippet.title
             binding.blackBar.isVisible = false
             binding.tvTimeOrVideos.text = item.snippet.publishedAt
+            itemView.setOnClickListener {
+                onClick(item)
+            }
         }
     }
 
-    fun setItems(list: List<Item>) {
-        items.clear()
-        items.addAll(list)
+    fun setItems(list: List<Item>?) {
+        list?.let { items.addAll(it) }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailViewHolder {

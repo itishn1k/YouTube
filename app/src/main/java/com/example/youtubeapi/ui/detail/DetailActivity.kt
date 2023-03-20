@@ -1,5 +1,6 @@
 package com.example.youtubeapi.ui.detail
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.core.view.isVisible
@@ -13,6 +14,7 @@ import com.example.youtubeapi.core.extention.showToast
 import com.example.youtubeapi.core.ui.BaseActivity
 import com.example.youtubeapi.core.utils.ConnectionLiveData
 import com.example.youtubeapi.databinding.ActivityDetailBinding
+import com.example.youtubeapi.ui.video.VideoActivity
 
 class DetailActivity : BaseActivity<DetailViewModel, ActivityDetailBinding>() {
     private lateinit var adapter: DetailAdapter
@@ -26,6 +28,13 @@ class DetailActivity : BaseActivity<DetailViewModel, ActivityDetailBinding>() {
     }
 
     override fun initListener() {
+        adapter = DetailAdapter {
+            val intent = Intent(this@DetailActivity, VideoActivity::class.java)
+            intent.putExtra(KEY, it.id)
+            intent.putExtra(KEY_TITLE, it.snippet.title)
+            intent.putExtra(KEY_DESC, it.snippet.description)
+            startActivity(intent)
+        }
         binding.toolbar.tvBack.setOnClickListener {
             finish()
         }
@@ -47,7 +56,6 @@ class DetailActivity : BaseActivity<DetailViewModel, ActivityDetailBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        adapter = DetailAdapter()
         setItems()
     }
 
@@ -56,9 +64,9 @@ class DetailActivity : BaseActivity<DetailViewModel, ActivityDetailBinding>() {
         val desc = intent.getStringExtra(KEY_DESC)
         val id = intent.getStringExtra(KEY)
         id?.let { _ ->
-            viewModel.getItemLists(id).observe(this) {
+            viewModel.getItemsList(id).observe(this) {
                 binding.rvItems.adapter = adapter
-                adapter.setItems(it.items)
+                adapter.setItems(it.data?.items)
                 binding.tvTitleDetail.text = title
                 binding.tvPlaylistDescription.text = desc
             }

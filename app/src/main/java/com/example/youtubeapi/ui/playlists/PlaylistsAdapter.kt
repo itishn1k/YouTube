@@ -8,7 +8,7 @@ import coil.load
 import com.example.youtubeapi.databinding.ItemPlaylistBinding
 import com.example.youtubeapi.data.remote.model.Item
 
-class PlaylistsAdapter(val onClick: (Item) -> Unit) :
+class PlaylistsAdapter(val onCLick: (Item) -> Unit) :
     RecyclerView.Adapter<PlaylistsAdapter.PlaylistsViewHolder>() {
 
     private var playlists = arrayListOf<Item>()
@@ -25,10 +25,6 @@ class PlaylistsAdapter(val onClick: (Item) -> Unit) :
     fun setData(list: List<Item>) {
         playlists.addAll(list)
     }
-//    fun setData(list: List<Item>) {
-//        playlists.addAll(list)
-//    }
-
     override fun getItemCount(): Int {
         return playlists.size
     }
@@ -45,7 +41,7 @@ class PlaylistsAdapter(val onClick: (Item) -> Unit) :
             binding.tvTitle.text = playlists.snippet.title
             binding.tvTimeOrVideos.text = "${playlists.contentDetails.itemCount} video series"
             itemView.setOnClickListener {
-                onClick(playlists)
+                onCLick(playlists)
             }
         }
     }
