@@ -5,20 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
-import com.example.youtubeapi.App
+import com.example.youtubeapi.App.Companion.KEY
 import com.example.youtubeapi.App.Companion.KEY_DESC
 import com.example.youtubeapi.App.Companion.KEY_TITLE
-import com.example.youtubeapi.App.Companion.PLAYLIST_INFO
 import com.example.youtubeapi.R
+import com.example.youtubeapi.core.ui.BaseActivity
+import com.example.youtubeapi.databinding.PlaylistsMainBinding
+import com.example.youtubeapi.ui.detail.DetailActivity
+import com.example.youtubeapi.core.utils.ConnectionLiveData
 import com.example.youtubeapi.core.extention.isNetworkConnected
 import com.example.youtubeapi.core.extention.showToast
 import com.example.youtubeapi.core.network.result.Status
-import com.example.youtubeapi.core.ui.BaseActivity
-import com.example.youtubeapi.core.utils.ConnectionLiveData
-import com.example.youtubeapi.data.remote.model.Item
-import com.example.youtubeapi.data.remote.model.PlaylistInfo
-import com.example.youtubeapi.databinding.PlaylistsMainBinding
-import com.example.youtubeapi.ui.detail.DetailActivity
 
 class PlayListsActivity : BaseActivity<PlayListsViewModel, PlaylistsMainBinding>() {
     private lateinit var adapter: PlaylistsAdapter
@@ -26,40 +23,19 @@ class PlayListsActivity : BaseActivity<PlayListsViewModel, PlaylistsMainBinding>
         ViewModelProvider(this)[PlayListsViewModel::class.java]
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding.toolbar.tvBack.isVisible = false
+        checkInternet()
+    }
 
     override fun initListener() {
-
         adapter = PlaylistsAdapter {
             val intent = Intent(this@PlayListsActivity, DetailActivity::class.java)
-            intent.putExtra(App.KEY, it.id)
+            intent.putExtra(KEY, it.id)
             intent.putExtra(KEY_TITLE, it.snippet.title)
             intent.putExtra(KEY_DESC, it.snippet.description)
             startActivity(intent)
-        }
-    }
-
-    override fun initViewModel() {
-        super.initViewModel()
-        binding.toolbar.tvBack.isVisible = false
-        viewModel.loading.observe(this) {
-            binding.progressCircular.isVisible = it
-        }
-
-        viewModel.getPlaylists().observe(this) {
-            binding.rvPlaylists.adapter = adapter
-            when (it.status) {
-                Status.LOADING -> {
-                    viewModel.loading.postValue(true)
-                }
-                Status.SUCCESS -> {
-                    viewModel.loading.postValue(false)
-                    it.data?.items?.let { it1 -> adapter.setData(it1) }
-                }
-                Status.ERROR -> {
-                    viewModel.loading.postValue(false)
-                    showToast(it.message.toString())
-                }
-            }
         }
     }
 
@@ -81,31 +57,31 @@ class PlayListsActivity : BaseActivity<PlayListsViewModel, PlaylistsMainBinding>
                     }
                 }
             } else {
-                initViewModel()
+                setPlaylists()
             }
         }
     }
 
-//    fun setPlaylists() {
-//        viewModel.loading.observe(this) {
-//            binding.progressCircular.isVisible = it
-//        }
-//
-//        viewModel.getPlaylists().observe(this) {
-//            binding.rvPlaylists.adapter = adapter
-//            when (it.status) {
-//                Status.LOADING -> {
-//                    viewModel.loading.postValue(true)
-//                }
-//                Status.SUCCESS -> {
-//                    viewModel.loading.postValue(false)
-//                    it.data?.items?.let { it1 -> adapter.setData(it1) }
-//                }
-//                Status.ERROR -> {
-//                    viewModel.loading.postValue(false)
-//                    showToast(it.message.toString())
-//                }
-//            }
-//        }
-//    }
+    private fun setPlaylists() {
+        viewModel.loading.observe(this) {
+            binding.progressCircular.isVisible = it
+        }
+
+        viewModel.getPlaylists().observe(this) {
+            binding.rvPlaylists.adapter = adapter
+            when (it.status) {
+                Status.LOADING -> {
+                    viewModel.loading.postValue(true)
+                }
+                Status.SUCCESS -> {
+                    viewModel.loading.postValue(false)
+                    it.data?.items?.let { it1 -> adapter.setData(it1) }
+                }
+                Status.ERROR -> {
+                    viewModel.loading.postValue(false)
+                    showToast(it.message.toString())
+                }
+            }
+        }
+    }
 }
