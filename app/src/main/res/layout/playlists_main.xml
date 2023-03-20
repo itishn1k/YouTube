@@ -7,17 +7,6 @@
     android:orientation="vertical"
     tools:context=".ui.playlists.PlayListsActivity">
 
-    <FrameLayout
-        android:id="@+id/no_internet"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
-
-        <include
-            android:id="@+id/include"
-            layout="@layout/no_internet" />
-    </FrameLayout>
-
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar"
@@ -31,6 +20,8 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteX="-47dp"
         tools:listitem="@layout/item_playlist" />
 
     <ProgressBar
@@ -44,5 +35,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/no_internet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <include
+            android:id="@+id/include"
+            layout="@layout/no_internet" />
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

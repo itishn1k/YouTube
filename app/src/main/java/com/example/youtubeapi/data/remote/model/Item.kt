@@ -8,41 +8,16 @@ data class Item(
     val snippet: Snippet
 )
 
+data class VideoItem(
+    val etag: String,
+    val items: List<Item>,
+    val kind: String,
+    val pageInfo: PageInfo
+)
+
 data class PlaylistItem(
     val kind: String,
     val items: List<Item>,
-)
-
-data class ContentDetails(
-    val itemCount: Int
-)
-
-data class Default(
-    val height: Int,
-    val url: String,
-    val width: Int
-)
-
-data class High(
-    val height: Int,
-    val url: String,
-    val width: Int
-)
-
-data class Localized(
-    val description: String,
-    val title: String
-)
-
-data class Medium(
-    val height: Int,
-    val url: String,
-    val width: Int
-)
-
-data class PageInfo(
-    val resultsPerPage: Int,
-    val totalResults: Int
 )
 
 data class Playlists(
@@ -52,6 +27,12 @@ data class Playlists(
     val nextPageToken: String,
     val pageInfo: PageInfo
 )
+data class PlaylistInfo(
+    val id : String,
+    val title : String,
+    val desc : String,
+    val itemCount : Int
+) : java.io.Serializable
 
 data class Snippet(
     val channelId: String,
@@ -63,18 +44,51 @@ data class Snippet(
     val title: String
 )
 
-data class Standard(
+data class ContentDetails(
+    val itemCount: Int
+)
+
+data class Localized(
+    val description: String,
+    val title: String
+)
+
+data class PageInfo(
+    val resultsPerPage: Int,
+    val totalResults: Int
+)
+
+data class Thumbnails(
+    val default: Default,
+    val medium: Medium,
+    val high: High,
+    val standard: Standard,
+    val maxres: Maxres
+
+)
+
+data class Default(
     val height: Int,
     val url: String,
     val width: Int
 )
 
-data class Thumbnails(
-    val default: Default,
-    val high: High,
-    val maxres: Maxres,
-    val medium: Medium,
-    val standard: Standard
+data class Medium(
+    val height: Int,
+    val url: String,
+    val width: Int
+)
+
+data class High(
+    val height: Int,
+    val url: String,
+    val width: Int
+)
+
+data class Standard(
+    val height: Int,
+    val url: String,
+    val width: Int
 )
 
 data class Maxres(
