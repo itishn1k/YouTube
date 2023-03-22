@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.example.youtubeapi.App.Companion.KEY
 import com.example.youtubeapi.App.Companion.KEY_DESC
+import com.example.youtubeapi.App.Companion.KEY_ITEM_COUNT
 import com.example.youtubeapi.App.Companion.KEY_TITLE
 import com.example.youtubeapi.R
 import com.example.youtubeapi.core.ui.BaseActivity
@@ -16,17 +17,20 @@ import com.example.youtubeapi.core.utils.ConnectionLiveData
 import com.example.youtubeapi.core.extention.isNetworkConnected
 import com.example.youtubeapi.core.extention.showToast
 import com.example.youtubeapi.core.network.result.Status
+import com.example.youtubeapi.di.viewModules
+import com.example.youtubeapi.repository.Repository
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlayListsActivity : BaseActivity<PlayListsViewModel, PlaylistsMainBinding>() {
-    private lateinit var adapter: PlaylistsAdapter
-    override val viewModel: PlayListsViewModel by lazy {
-        ViewModelProvider(this)[PlayListsViewModel::class.java]
-    }
 
+    private val repository: Repository by inject()
+
+    private lateinit var adapter: PlaylistsAdapter
+    override val viewModel: PlayListsViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.toolbar.tvBack.isVisible = false
-        checkInternet()
+        setPlaylists()
     }
 
     override fun initListener() {
@@ -35,6 +39,7 @@ class PlayListsActivity : BaseActivity<PlayListsViewModel, PlaylistsMainBinding>
             intent.putExtra(KEY, it.id)
             intent.putExtra(KEY_TITLE, it.snippet.title)
             intent.putExtra(KEY_DESC, it.snippet.description)
+            intent.putExtra(KEY_ITEM_COUNT, it.contentDetails.itemCount)
             startActivity(intent)
         }
     }
@@ -44,25 +49,24 @@ class PlayListsActivity : BaseActivity<PlayListsViewModel, PlaylistsMainBinding>
     }
 
     override fun checkInternet() {
-        super.checkInternet()
         val cld = ConnectionLiveData(application)
         cld.observe(this) {
             if (!it) {
-                binding.noInternet.isVisible = true
-                binding.include.btnTryAgain.setOnClickListener {
+                binding.noInternet.root.isVisible = true
+                binding.noInternet.btnTryAgain.setOnClickListener {
                     if (!isNetworkConnected()) {
                         showToast(getString(R.string.no_internet))
-                    } else {
-                        binding.noInternet.isVisible = false
                     }
                 }
             } else {
                 setPlaylists()
+                binding.noInternet.root.isVisible = false
             }
         }
     }
 
     private fun setPlaylists() {
+        binding.toolbar.tvBack.isVisible = false
         viewModel.loading.observe(this) {
             binding.progressCircular.isVisible = it
         }

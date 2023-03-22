@@ -8,6 +8,7 @@
     <dimen name="item_top_margin">16dp</dimen>
     <dimen name="black_bar_height">24dp</dimen>
     <dimen name="text_size_desc">12sp</dimen>
+    <dimen name="text_size_desc_16">16sp</dimen>
     <dimen name="text_margin_top">4dp</dimen>
     <dimen name="text_size_title">16sp</dimen>
     <dimen name="text_title_margin">8dp</dimen>
@@ -28,4 +29,8 @@
     <dimen name="btn_m_hor">16dp</dimen>
     <dimen name="_56dp">56dp</dimen>
     <dimen name="_8dp">8dp</dimen>
+    <dimen name="layout_elevation">100dp</dimen>
+    <dimen name="stroke_width">1dp</dimen>
+    <dimen name="layout_height_240">240dp</dimen>
+    <dimen name="margin_top_24">24dp</dimen>
 </resources>

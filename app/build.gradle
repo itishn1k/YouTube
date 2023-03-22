@@ -13,7 +13,6 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
-
         buildConfigField "String", "BASE_URL", "\"https://www.googleapis.com/youtube/v3/\""
         buildConfigField "String", "API_KEY", "\"AIzaSyBrTGPXUcVnxNx_5C6ryAKxQxpYljgigEg\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -47,6 +46,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
@@ -62,6 +62,9 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2")
 
     // Exoplayer
-    implementation 'com.google.android.exoplayer:exoplayer:2.16.1'
-
+    implementation 'com.google.android.exoplayer:exoplayer:2.18.1'
+    // Koin
+    implementation "io.insert-koin:koin-android:$koin_version"
+    implementation "io.insert-koin:koin-androidx-scope:$koin_version"
+    implementation "io.insert-koin:koin-androidx-viewmodel:$koin_version"
 }

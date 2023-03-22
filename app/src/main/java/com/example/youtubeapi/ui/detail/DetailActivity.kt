@@ -1,10 +1,10 @@
 package com.example.youtubeapi.ui.detail
 
+
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import com.example.youtubeapi.App.Companion.KEY
 import com.example.youtubeapi.App.Companion.KEY_DESC
 import com.example.youtubeapi.App.Companion.KEY_TITLE
@@ -15,13 +15,12 @@ import com.example.youtubeapi.core.ui.BaseActivity
 import com.example.youtubeapi.core.utils.ConnectionLiveData
 import com.example.youtubeapi.databinding.ActivityDetailBinding
 import com.example.youtubeapi.ui.video.VideoActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailActivity : BaseActivity<DetailViewModel, ActivityDetailBinding>() {
     private lateinit var adapter: DetailAdapter
 
-    override val viewModel: DetailViewModel by lazy {
-        ViewModelProvider(this)[DetailViewModel::class.java]
-    }
+    override val viewModel: DetailViewModel by viewModel()
 
     override fun inflateViewBinding(inflater: LayoutInflater): ActivityDetailBinding {
         return ActivityDetailBinding.inflate(layoutInflater)

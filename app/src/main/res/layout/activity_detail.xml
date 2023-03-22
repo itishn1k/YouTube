@@ -8,13 +8,13 @@
     tools:context=".ui.detail.DetailActivity">
 
     <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
-
-    <include
         android:id="@+id/no_internet"
         layout="@layout/no_internet"
-        android:visibility="gone" />
+        android:visibility="invisible" />
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -51,9 +51,9 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/fjallaone_regular"
                         android:maxLines="2"
-                        tools:text="@string/emotional"
                         android:textColor="@color/text_black"
-                        android:textSize="@dimen/tv_playlist_text_size" />
+                        android:textSize="@dimen/tv_playlist_text_size"
+                        tools:text="@string/emotional" />
 
                     <TextView
                         android:id="@+id/tv_playlist_description"
@@ -62,10 +62,10 @@
                         android:layout_marginTop="@dimen/_8dp"
                         android:fontFamily="@font/notosans_medium"
                         android:maxLines="5"
-                        tools:text="@string/in_this_series"
                         android:textColor="@color/text_black"
                         android:textSize="@dimen/tv_desc_text_size"
-                        tools:ignore="VisualLintLongText" />
+                        tools:ignore="VisualLintLongText"
+                        tools:text="@string/in_this_series" />
 
                 </LinearLayout>
             </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -73,7 +73,7 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -82,7 +82,6 @@
                 android:layout_height="match_parent"
                 android:paddingHorizontal="@dimen/page_padding"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout"
                 tools:listitem="@layout/item_playlist" />
@@ -90,6 +89,7 @@
         </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_play"
             android:layout_width="@dimen/_56dp"
             android:layout_height="@dimen/_56dp"
             android:layout_marginEnd="@dimen/page_padding"

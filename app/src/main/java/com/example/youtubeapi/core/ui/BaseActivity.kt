@@ -1,4 +1,5 @@
 package com.example.youtubeapi.core.ui
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
@@ -15,7 +16,6 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
         super.onCreate(savedInstanceState)
         binding = inflateViewBinding(layoutInflater)
         setContentView(binding.root)
-//hello
         checkInternet()
         initViewModel()
         initView()
